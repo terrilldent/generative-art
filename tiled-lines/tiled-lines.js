@@ -8,12 +8,13 @@ const CANVAS_HEIGHT = 600;
 // Square Attributes
 const LINE_WIDTH = 2;
 const INCREMENTS = 30;
+const STEP_TIMEOUT = 5;
 
 // Randomness Modifiers.
 var translationMultiplier = 10;
 var rotationMultiplier = 18;
 
-var ctx = (function initializeCanvas() {
+var context = (function initializeCanvas() {
   var canvas = document.querySelector('#canvas');
   var ctx = canvas.getContext('2d');
   var pixelRatio = window.devicePixelRatio || 1;
@@ -36,13 +37,24 @@ const drawLine = function(ctx, x, y, deltaX, deltaY) {
   ctx.stroke(); 
 };
 
-const picture = function() {
-  const stepSize = CANVAS_HEIGHT/INCREMENTS;
-  for(var y = 0; y <= CANVAS_HEIGHT; y += stepSize) {
-    for(var x = 0; x <= CANVAS_WIDTH; x += stepSize) {
-      drawLine(ctx, x, y, stepSize, stepSize);
-    }
-  } 
+const drawPicture = function(ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize) {  
+  setTimeout(drawSpan, STEP_TIMEOUT, ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize);
 };
 
-picture();
+const drawSpan = function(ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize) {
+  console.log(xProgress, yProgress)
+  drawLine(ctx, xProgress, yProgress, stepSize, stepSize);
+  
+  if (yProgress >= canvasHeight) {
+    return;
+  }
+  if (xProgress >= canvasWidth) {
+    yProgress += stepSize;
+    xProgress = 0;
+  } else {
+    xProgress += stepSize;
+  }
+  setTimeout(drawSpan, STEP_TIMEOUT, ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize);  
+};
+
+drawPicture(context, CANVAS_HEIGHT, CANVAS_HEIGHT, 0, 0, CANVAS_HEIGHT/INCREMENTS);
