@@ -5,14 +5,10 @@
 const CANVAS_WIDTH = 600;
 const CANVAS_HEIGHT = 600;
 
-// Square Attributes
+// Randomness Modifiers
 const LINE_WIDTH = 2;
 const INCREMENTS = 30;
 const STEP_TIMEOUT = 5;
-
-// Randomness Modifiers.
-var translationMultiplier = 10;
-var rotationMultiplier = 18;
 
 var context = (function initializeCanvas() {
   var canvas = document.querySelector('#canvas');
@@ -42,7 +38,6 @@ const drawPicture = function(ctx, canvasWidth, canvasHeight, xProgress, yProgres
 };
 
 const drawSpan = function(ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize) {
-  console.log(xProgress, yProgress)
   drawLine(ctx, xProgress, yProgress, stepSize, stepSize);
   
   if (yProgress >= canvasHeight) {
@@ -57,4 +52,4 @@ const drawSpan = function(ctx, canvasWidth, canvasHeight, xProgress, yProgress, 
   setTimeout(drawSpan, STEP_TIMEOUT, ctx, canvasWidth, canvasHeight, xProgress, yProgress, stepSize);  
 };
 
-drawPicture(context, CANVAS_HEIGHT, CANVAS_HEIGHT, 0, 0, CANVAS_HEIGHT/INCREMENTS);
+drawPicture(context, CANVAS_WIDTH, CANVAS_HEIGHT, 0, 0, CANVAS_HEIGHT/INCREMENTS);

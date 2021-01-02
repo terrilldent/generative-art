@@ -23,14 +23,6 @@ var context = (function initializeCanvas() {
   return ctx;
 }());
 
-var gradient = (function(){
-
-  var grd = context.createLinearGradient(0, 0, 0, 50);
-  grd.addColorStop(0, "black");
-  grd.addColorStop(1, "#FEE");
-  return grd;
-})();
-
 const drawLine = function(ctx, line) {
   ctx.beginPath();
   ctx.moveTo(line[0].x, line[0].y);
@@ -43,6 +35,7 @@ const drawLine = function(ctx, line) {
   }
   ctx.quadraticCurveTo(line[line.length - 2].x, line[line.length - 2].y, line[line.length - 1].x, line[line.length - 1].y);
   
+  // Delete the content inside the new shape.
   ctx.save();
   ctx.globalCompositeOperation = 'destination-out';
   ctx.fill();
@@ -51,7 +44,7 @@ const drawLine = function(ctx, line) {
   ctx.stroke(); 
 };
 
-const defineLine = function(canvasWidth, canvasHeight, yStepSize, linePoints, notUsed, yIndex) {
+const defineLine = function(canvasWidth, yStepSize, linePoints, notUsed, yIndex) {
   let yOffset = 50 + yStepSize * (yIndex + 1);
   let xStepSize = canvasWidth/linePoints;
 
@@ -69,7 +62,7 @@ const defineLine = function(canvasWidth, canvasHeight, yStepSize, linePoints, no
 const drawPicture = function(ctx, canvasWidth, canvasHeight, numLines, linePoints) {
   let yStepSize = (canvasHeight - 100) / numLines;
   let lines = Array.apply(null, Array(numLines))
-      .map(defineLine.bind(this, canvasWidth, canvasHeight, yStepSize, linePoints));
+      .map(defineLine.bind(this, canvasWidth, yStepSize, linePoints));
   
   lines.forEach(drawLine.bind(this, ctx));
 };
