@@ -5,7 +5,7 @@ const CANVAS_HEIGHT = 600;
 // Randomness Modifiers
 const NUM_DIVISIONS = 10;
 const LINE_WIDTH = 4;
-const CHANCE_OF_STOP = 0.6;
+const CHANCE_OF_STOP = 0.8;
 const CHANCE_OF_TWO_SPLITS = 0.2;
 
 var ctx = (function initializeCanvas() {
@@ -20,7 +20,7 @@ var ctx = (function initializeCanvas() {
   return ctx;
 }());
 
-function divideAndRender(squares, direction, space) {
+function divideAndRender(squares, direction, space, depth) {
   squares.push(space);
 
   // Render the new space
@@ -29,7 +29,7 @@ function divideAndRender(squares, direction, space) {
   ctx.stroke(); 
 
   let stop = Math.abs(Math.random());
-  if (Math.abs(Math.random()) < CHANCE_OF_STOP) {
+  if (Math.abs(Math.random()) * depth > CHANCE_OF_STOP) {
     return;
   }
 
@@ -50,12 +50,8 @@ function divideAndRender(squares, direction, space) {
     newSpace[targetSpan] = space[targetAxis] + (i+1) * divisionSize;
     newSpace[otherAxis] = space[otherAxis];
     newSpace[otherSpan] = space[otherSpan];
-    divideAndRender(squares, newDirection, newSpace);
+    divideAndRender(squares, newDirection, newSpace, depth+1);
   }
-}
-
-function getRandomSpan(v1, v2) {
-  return v1 + (v2 - v1) / 4 + (v2 - v1) / 2 * Math.random();
 }
 
 const drawPicture = function() {
@@ -65,7 +61,7 @@ const drawPicture = function() {
     width: CANVAS_WIDTH, 
     height: CANVAS_HEIGHT
   };
-  divideAndRender([], "LTR", space)
+  divideAndRender([], "LTR", space, 0)
 }
 
 drawPicture();
