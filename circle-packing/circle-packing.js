@@ -7,7 +7,7 @@ const CANVAS_HEIGHT = 600;
 
 // Randomness Modifiers
 const NUM_CIRCLES = 400;
-const MIN_RADIUS = 5;
+const MIN_RADIUS = 4;
 const MAX_RADIUS = 100;
 const LINE_WIDTH = 4;
 const MAX_ATTEMPTS_AT_CIRCLE = 50;
@@ -23,6 +23,9 @@ var ctx = (function initializeCanvas() {
   ctx.scale(pixelRatio, pixelRatio);  
   ctx.lineCap = 'square';
   ctx.lineWidth = LINE_WIDTH;
+  ctx.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.fillStyle = '#FEE';
+  ctx.fill();
   return ctx;
 }());
 
@@ -80,10 +83,10 @@ function hasCollision(circle, circles) {
       return true;
     }
   }  
-  if (circle.x + circle.radius >= CANVAS_WIDTH ||
-      circle.x - circle.radius <= 0 || 
-      circle.y + circle.radius >= CANVAS_HEIGHT ||
-      circle.y - circle.radius <= 0) {
+  if (circle.x + circle.radius >= (CANVAS_WIDTH - 5) ||
+      circle.x - circle.radius <= 5 || 
+      circle.y + circle.radius >= (CANVAS_HEIGHT - 5) ||
+      circle.y - circle.radius <= 5) {
     return true;
   }
   return false;

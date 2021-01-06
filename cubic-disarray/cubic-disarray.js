@@ -21,6 +21,9 @@ var ctx = (function initializeCanvas() {
   canvas.height = canvasHeight * pixelRatio;
   ctx.scale(pixelRatio, pixelRatio);
   ctx.lineWidth = lineWidth;
+  ctx.rect(0, 0, canvasWidth, canvasHeight);
+  ctx.fillStyle = '#FEE';
+  ctx.fill();
   return ctx;
 }());
 

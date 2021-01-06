@@ -20,6 +20,9 @@ var context = (function initializeCanvas() {
   ctx.scale(pixelRatio, pixelRatio);  
   ctx.lineCap = 'square';
   ctx.lineWidth = LINE_WIDTH;
+  ctx.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.fillStyle = '#FEE';
+  ctx.fill();
   return ctx;
 }());
 
@@ -37,7 +40,7 @@ const drawLine = function(ctx, line) {
   
   // Delete the content inside the new shape.
   ctx.save();
-  ctx.globalCompositeOperation = 'destination-out';
+  ctx.fillStyle = '#FEE';
   ctx.fill();
   ctx.restore();
   

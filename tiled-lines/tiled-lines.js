@@ -7,8 +7,8 @@ const CANVAS_HEIGHT = 600;
 
 // Randomness Modifiers
 const LINE_WIDTH = 2;
-const INCREMENTS = 30;
-const STEP_TIMEOUT = 5;
+const INCREMENTS = 20;
+const STEP_TIMEOUT = 0;
 
 var context = (function initializeCanvas() {
   var canvas = document.querySelector('#canvas');
@@ -19,6 +19,9 @@ var context = (function initializeCanvas() {
   ctx.scale(pixelRatio, pixelRatio);  
   ctx.lineCap = 'square';
   ctx.lineWidth = LINE_WIDTH;
+  ctx.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+  ctx.fillStyle = '#FEE';
+  ctx.fill();
   return ctx;
 }());
 
